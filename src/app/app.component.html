@@ -1,0 +1,178 @@
+<div class="container py-2">
+  <div class="main-div">
+    <h2 class="text-center">Personas</h2>
+
+    <table class="table table-striped text-center">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Edad</th>
+          <th scope="col">Sexo</th>
+          <th scope="col">Documento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let persona of personas">
+          <td>{{ persona.Nombre }}</td>
+          <td>{{ persona.Edad }}</td>
+          <td>{{ persona.Sexo }}</td>
+          <td>
+            <div *ngIf="persona.Documento!='';else sinImagen">
+              <button type="button" class="btn btn-primary btn-sm" (click)="abrirImagen(persona.Documento)">
+                Imagen
+              </button>
+            </div>
+            <ng-template #sinImagen>
+              <button type="button" class="btn btn-secondary btn-sm" disabled>
+                Imagen
+              </button>
+            </ng-template>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form class="example-form">
+      <div class="row justify-content-lg-start">
+
+        <div class="col-6" style="color:#007bff">
+
+
+        <div class="card p-4">
+
+
+          <h2>Nuevo registro:</h2>
+
+          <div class="col">
+            <mat-form-field
+              class="example-full-width"
+              appearance="legacy"
+              color="primary"
+            >
+              <mat-label style="color: #007bff;">Nombre:</mat-label>
+              <input matInput [formControl]="nombreNuevoForm" />
+            </mat-form-field>
+          </div>
+          <hr>
+          <div class="col">
+            <mat-form-field
+              class="example-full-width"
+              appearance="legacy"
+              color="primary"
+            >
+              <mat-label style="color: #007bff;">Edad:</mat-label>
+              <input matInput [formControl]="edadForm" />
+            </mat-form-field>
+          </div>
+          <hr>
+
+          <div class="col">
+            <mat-label style="color: #007bff;" >Sexo:</mat-label>
+            <select class="form-select my-2" [formControl]="sexoForm">
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+
+            </select>
+          </div>
+          <hr>
+          <div class="col">
+            <input  style="display:none" type="file" value="" id="ScreenNuevo" accept=".png, .jpeg, .jpg, .pdf"
+            (change)="CreateBase64String_Nuevo($event)"  #fileInput/>
+                <button class="btn btn-primary btn-sm" style="cursor: pointer" (click)="abrirArchivo_Nuevo($event)" >
+                  <i class="small material-icons">attach_file</i> Subir documento
+                </button>
+  
+            <div class="img-space">
+              <ng-container *ngIf="isImageSaved_Nuevo">
+                <img [src]="cardImageBase64_Nuevo" style="max-width: 300px; height: auto" />
+              </ng-container>
+            </div>
+          </div>
+          <div class="col pt-2">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="guardarPersona()"
+            >
+              Guardar
+            </button>
+          </div>
+
+        </div>
+
+
+
+
+      </div>
+      <div class="col-6" style="color:#007bff">
+
+
+        <div class="card p-4">
+
+
+          <h2>Subir imagen para persona:</h2>
+
+          <div class="col-12">
+
+            <select class="form-select" [formControl]="nombreForm">
+              <option *ngFor="let lista of personas;" value="{{lista.Nombre}}">{{lista.Nombre}}</option>
+            </select>
+
+
+          </div>
+          <hr>|
+          <div class="col-lg-6">
+            <input  style="display:none" type="file" value="" id="Screen" accept=".png, .jpeg, .jpg, .pdf"
+            (change)="CreateBase64String($event)"  #fileInput/>
+                <button class="btn btn-primary btn-sm" style="cursor: pointer" (click)="abrirArchivo($event)" >
+                  <i class="small material-icons">attach_file</i> Subir documento
+                </button>
+              </div>
+
+                <div class="col-lg-6">
+  
+            <div class="img-space">
+              <ng-container *ngIf="isImageSaved">
+                <img [src]="cardImageBase64" style="max-width: 300px; height: auto" />
+              </ng-container>
+            </div>
+
+
+          </div>
+          <div class="col-12 pt-2">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="guardarDocumento()"
+            >
+              Guardar
+            </button>
+          </div>
+
+        </div>
+
+
+
+
+      </div>
+
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img [src]="persona.Documento" style="width: 75px; height: auto" />
+      </div>
+    </div>
+  </div>
+</div> -->
